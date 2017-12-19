@@ -37,10 +37,12 @@ class App extends Component {
               <Nav key={movie.id} id={movie.id} movieTitle={movie.title} />
             );
           })}
+          <li><NavLink to='/new' exact>Add Movie</NavLink></li>
           </ul>
           </div>
           <div className="Content">
-          <Route path="/movie/:id" component={MovieView} /></div>
+          <Route path="/movie/:id" component={MovieView} />
+          <Route path="/new" component={NewMovie} exact/></div>
         </div>
       </BrowserRouter>
     );
@@ -76,18 +78,18 @@ class MovieView extends Component {
   render() {
     return (
       <div className="movieView">
-        <h3>Title:{this.state.movie.title}</h3>
+        <h3>{this.state.movie.title}</h3>
         <p>Director:{this.state.movie.director}</p>
         <p>Metascore: {this.state.movie.metascore}</p>
-        <ul>
-          {" "}
+        {/* <ul> */}
+          
           Stars:
           {this.state.movie.stars.map((star) => {
             return (
               <li className="list" key={star}>{star}</li>
             )
           })}
-        </ul>
+        {/* </ul> */}
       </div>
     );
   }
@@ -101,5 +103,29 @@ function Nav(props) {
       </li>
     </div>
   );
+}
+class NewMovie extends Component {
+  constructor() {
+    super();
+    this.state = {
+      title: '',
+      director: '',
+      metascore: 0,
+      stars: []
+    }
+  }
+  render() {
+  return (
+    <div className="NewMovie">
+      <form>
+        <input type="text" placeholder="Moive title"/>
+        <input type="text" placeholder="Movie director"/>
+        <input type="number" placeholder="New Metascore"/>
+        <input type="text" placeholder="Stars"/>
+        <button type="submit">Add new movie</button>
+      </form>
+    </div>
+  )
+}
 }
 export default App;
